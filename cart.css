@@ -1,0 +1,134 @@
+#cartSection{
+  margin-top: 120px;
+}
+.cartProd{
+  display: grid;
+  grid-template-columns: 70% 30%;
+  padding: 20px 120px;
+  column-gap: 50px;
+}
+.cartProductDetails{
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  margin-bottom: 50px;
+}
+.cartProdImg{
+  width: 350px;
+  height: 300px;
+  border-radius: 10px;
+  padding: 0px 10px;
+}
+.cartProdName{
+  font-size: 25px;
+  font-weight: bold;
+
+}
+
+.cartProdPrice{
+  font-size: 30px;
+  font-weight: bold;
+}
+.fa-solid{
+  color: rgb(132, 4, 161);
+  font-size: 18px;
+  margin-right: 5px;
+}
+.cartDeleteBtn{
+  color: rgb(132, 4, 161);
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  background-color: white;
+}
+.cartProdDetailsColumn{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10px;
+}
+.cartProdNamePriceRow{
+  padding: 20px 80px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.cartProdDesc{
+  font-size: 19px;
+  padding: 20px 80px;
+  text-align: justify;
+}
+.cartProdSettingsRow{
+  width: 100%;
+  padding: 20px 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cartProdQuantity{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cartProdQuantity span{
+  margin-left: 30px;
+  margin-right: 30px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.cartProdQuantity i{
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.deleteDiv{
+  cursor: pointer;
+}
+
+
+
+
+
+
+.cartDetailsColumn{
+  margin-top: 120px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+}
+.cartPaimentRow{
+  padding: 20px 50px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cartTitle{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  margin-right: 188px;
+}
+.CartTotalPrice{
+  font-size: 42px;
+  font-weight: bold;
+
+}
+.cartTotalPriceWord{
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.cartPayBtn{
+  padding: 10px 140px;
+  border: none;
+  background-color:  rgb(132, 4, 161);
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 30px;}
