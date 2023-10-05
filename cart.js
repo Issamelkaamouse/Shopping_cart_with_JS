@@ -1,6 +1,7 @@
 // localStorage.clear();
-document.querySelector(".cartCount").innerHTML =
-  localStorage.getItem("cartItemCount");
+let cartCounter = localStorage.getItem("cartItemCount");
+document.querySelector(".cartCount").innerHTML = cartCounter;
+
 let cartProductsList = JSON.parse(localStorage.getItem("cartProductsList"));
 renderCartProducts();
 function renderCartProducts() {
@@ -18,7 +19,7 @@ function renderCartProducts() {
         <div class="cartProdSettingsRow">
           <div class="deleteDiv">
             <i class="fa-solid fa-trash"></i>
-            <button class="cartDeleteBtn">Delete</button>
+            <button onclick="deleteCartProduct(${index})" class="cartDeleteBtn">Delete</button>
           </div>
           <div class="cartProdQuantity">
             <i onclick="decrementQuantity(${index});" class="fa-solid fa-square-minus"></i>
@@ -63,6 +64,12 @@ function updateProductPrice(index) {
 //   .querySelector(".cartDeleteBtn")
 //   .addEventListener("click", () => deleteCartProduct());
 
-function deleteCartProduct() {
+function deleteCartProduct(index) {
   console.log("removed");
+  cartProductsList.splice(index, 1);
+  cartCounter--;
+  localStorage.setItem("cartItemCount", cartCounter);
+  document.querySelector(".cartCount").innerHTML = cartCounter;
+  localStorage.setItem("cartProductsList", JSON.stringify(cartProductsList));
+  renderCartProducts();
 }

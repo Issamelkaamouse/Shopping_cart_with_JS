@@ -350,6 +350,7 @@ function addToCart(index) {
   const selectedProduct = storedProductsList[index];
   if (!selectedProduct.isAddedToCart) {
     selectedProduct.isAddedToCart = true;
+    selectedProduct.quantity = 1;
     cartProductsList.push(selectedProduct);
     cartItemCount++;
     updateLocalStorage();
