@@ -313,8 +313,10 @@ function renderProducts() {
   let htmlProducts = "";
   storedProductsList.forEach((product, index) => {
     let isAddedToCart = cartProductsList.some((item) => item.id === product.id);
-    let addToCartText = isAddedToCart ? "Added" : "Add To Cart";
-    let buttonBackgroundColor = isAddedToCart ? "green" : "rgb(132, 4, 161)";
+    let addToCartText = product.isAddedToCart ? "Added" : "Add To Cart";
+    let buttonBackgroundColor = product.isAddedToCart
+      ? "green"
+      : "rgb(132, 4, 161)";
     let htmlProduct = `
       <div class="container">
         <img class="ProductImg" src="${product.img}" alt="">

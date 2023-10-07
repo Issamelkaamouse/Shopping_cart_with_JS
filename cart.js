@@ -1,4 +1,5 @@
 // localStorage.clear();
+
 let cartCounter = localStorage.getItem("cartItemCount");
 document.querySelector(".cartCount").innerHTML = cartCounter;
 
@@ -30,8 +31,6 @@ function renderCartProducts() {
       </div>
       </div>`;
       htmlProducts += htmlProduct;
-    } else {
-      document.querySelector(".cartDetails").innerHTML = "nothing here";
     }
   });
   document.querySelector(".cartDetails").innerHTML = htmlProducts;
@@ -63,13 +62,27 @@ function updateProductPrice(index) {
 // document
 //   .querySelector(".cartDeleteBtn")
 //   .addEventListener("click", () => deleteCartProduct());
+let productsList = JSON.parse(localStorage.getItem("productsList"));
 
 function deleteCartProduct(index) {
-  console.log("removed");
-  cartProductsList.splice(index, 1);
+  cartProductsList[index].isAddedToCart = false;
+  let productsList = JSON.parse(localStorage.getItem("productsList"));
+  console.log(productsList);
+  productsList[indexOfProductDeletedFromCart(index)].isAddedToCart = false;
+  localStorage.setItem("productsList", JSON.stringify(productsList));
   cartCounter--;
   localStorage.setItem("cartItemCount", cartCounter);
   document.querySelector(".cartCount").innerHTML = cartCounter;
   localStorage.setItem("cartProductsList", JSON.stringify(cartProductsList));
   renderCartProducts();
+}
+
+function indexOfProductDeletedFromCart(ind) {
+  let i = 0;
+  productsList.forEach((item, index) => {
+    if (item.id === cartProductsList[ind].id) {
+      i = index;
+    }
+  });
+  return i;
 }
