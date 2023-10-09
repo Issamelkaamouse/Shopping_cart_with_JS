@@ -1,44 +1,49 @@
 // localStorage.clear();
 
-let cartCounter = localStorage.getItem("cartItemCount");
+let cartCounter = parseInt(localStorage.getItem("cartItemCount")) || 0;
+
 document.querySelector(".cartCount").innerHTML = cartCounter;
 
 let cartProductsList = JSON.parse(localStorage.getItem("cartProductsList"));
-let totalPrice = 0;
+// parseInt(localStorage.getItem("totalPrice")) ||
+let totalPrice = getTotal("DEFAULT");
 document.querySelector(".cartTotalPrice").innerHTML = totalPrice;
-
 renderCartProducts();
-getTotalPriceOfCartProducts5();
 
 function renderCartProducts() {
   let htmlProducts = ``;
   cartProductsList.forEach((product, index) => {
     if (product.isAddedToCart) {
-      let htmlProduct = `<div class="cartProductDetails">
-      <img src=${product.img} alt="" class="cartProdImg">
-      <div class="cartProdDetailsColumn">
-        <div class="cartProdNamePriceRow">
-          <span class="cartProdName">${product.title}</span>
-          <span class="cartProdPrice">${product.price} $</span>
-        </div>
-        <p class="cartProdDesc">${product.desc} </p>
-        <div class="cartProdSettingsRow">
-          <div class="deleteDiv">
-            <i class="fa-solid fa-trash"></i>
-            <button onclick="deleteCartProduct(${index})" class="cartDeleteBtn">Delete</button>
-          </div>
-          <div class="cartProdQuantity">
-            <i onclick="decrementQuantity(${index});  decrementCartTotalPrice();" class="fa-solid fa-square-minus"></i>
-            <span>${product.quantity}</span>
-            <i onclick="incrementQuantity(${index});"  class="fa-solid fa-square-plus"></i>
-          </div>
-        </div>
-      </div>
-      </div>`;
-      htmlProducts += htmlProduct;
+      htmlProducts += generateHtmlCartProducts(product, index);
     }
   });
+  localStorage.setItem("totalPrice", totalPrice);
+  document.querySelector(".cartTotalPrice").innerHTML = totalPrice;
   document.querySelector(".cartDetails").innerHTML = htmlProducts;
+}
+
+function generateHtmlCartProducts(product, index) {
+  return `<div class="cartProductDetails">
+  <img src=${product.img} alt="" class="cartProdImg">
+  <div class="cartProdDetailsColumn">
+    <div class="cartProdNamePriceRow">
+      <span class="cartProdName">${product.title}</span>
+      <span class="cartProdPrice">${product.price} $</span>
+    </div>
+    <p class="cartProdDesc">${product.desc} </p>
+    <div class="cartProdSettingsRow">
+      <div class="deleteDiv">
+        <i class="fa-solid fa-trash"></i>
+        <button onclick="deleteCartProduct(${index})" class="cartDeleteBtn">Delete</button>
+      </div>
+      <div class="cartProdQuantity">
+        <i onclick="decrementQuantity(${index});  decrementCartTotalPrice();" class="fa-solid fa-square-minus"></i>
+        <span>${product.quantity}</span>
+        <i onclick="incrementQuantity(${index});"  class="fa-solid fa-square-plus"></i>
+      </div>
+    </div>
+  </div>
+  </div>`;
 }
 
 function decrementQuantity(index) {
@@ -47,7 +52,7 @@ function decrementQuantity(index) {
 
     cartProductsList[index].price -= updateProductPrice(index);
     localStorage.setItem("cartProductsList", JSON.stringify(cartProductsList));
-    getTotalPriceOfCartProducts1(index);
+    getTotal("DECCREMENT_CART_PRICE", index);
     renderCartProducts();
   }
 }
@@ -56,7 +61,7 @@ function incrementQuantity(index) {
   cartProductsList[index].price =
     updateProductPrice(index) * cartProductsList[index].quantity;
   localStorage.setItem("cartProductsList", JSON.stringify(cartProductsList));
-  getTotalPriceOfCartProducts(index);
+  getTotal("INCREMENT_CART_PRICE", index);
   renderCartProducts();
 }
 
@@ -76,7 +81,6 @@ let productsList = JSON.parse(localStorage.getItem("productsList"));
 function deleteCartProduct(index) {
   cartProductsList[index].isAddedToCart = false;
   let productsList = JSON.parse(localStorage.getItem("productsList"));
-  console.log(productsList);
   productsList[indexOfProductDeletedFromCart(index)].isAddedToCart = false;
   localStorage.setItem("productsList", JSON.stringify(productsList));
   if (cartCounter >= 1) {
@@ -85,7 +89,8 @@ function deleteCartProduct(index) {
   localStorage.setItem("cartItemCount", cartCounter);
   document.querySelector(".cartCount").innerHTML = cartCounter;
   localStorage.setItem("cartProductsList", JSON.stringify(cartProductsList));
-  deletePrice(index);
+
+  getTotal("DELETE_CART_PRICE", index);
   renderCartProducts();
 }
 
@@ -99,37 +104,31 @@ function indexOfProductDeletedFromCart(ind) {
   return i;
 }
 
-// this function calculate the total price in the cart
-// document.querySelector(".cartTotalPrice").innerHTML = `${totalPrice} $`;
-// cartTotalPrice();
-// let totalCartPrice = 0;
-// function cartTotalPrice() {
-//   totalCartPrice = totalCartPrice + getTotalPricesOfCartProducts();
-//   document.querySelector(".cartTotalPrice").innerHTML = `${totalCartPrice} $`;
-// }
+function getTotal(action, index = null) {
+  if (action === "DEFAULT") {
+    let totalCartPrice = 0;
+    cartProductsList.forEach((item) => {
+      totalCartPrice += item.price;
+    });
+    return totalCartPrice;
+  }
+  if (action === "INCREMENT_CART_PRICE") {
+    totalPrice += updateProductPrice(index);
+    localStorage.setItem("totalPrice", totalPrice);
 
-// function decrementCartTotalPrice() {
-//   console.log("gggg");
-// }
+    document.querySelector(".cartTotalPrice").innerHTML = totalPrice;
+  }
+  if (action === "DECCREMENT_CART_PRICE") {
+    totalPrice -= updateProductPrice(index);
+    localStorage.setItem("totalPrice", totalPrice);
 
-function getTotalPriceOfCartProducts5() {
-  cartProductsList.forEach((item) => {
-    totalPrice += item.price;
-  });
-  document.querySelector(".cartTotalPrice").innerHTML = totalPrice;
-  return totalPrice;
-}
-
-function deletePrice(index) {
-  totalPrice = totalPrice - cartProductsList[index].price;
-  document.querySelector(".cartTotalPrice").innerHTML = totalPrice;
-}
-
-function getTotalPriceOfCartProducts(index) {
-  totalPrice += updateProductPrice(index);
-  document.querySelector(".cartTotalPrice").innerHTML = totalPrice;
-}
-function getTotalPriceOfCartProducts1(index) {
-  totalPrice -= updateProductPrice(index);
-  document.querySelector(".cartTotalPrice").innerHTML = totalPrice;
+    document.querySelector(".cartTotalPrice").innerHTML = totalPrice;
+  }
+  if (action === "DELETE_CART_PRICE") {
+    totalPrice = totalPrice - cartProductsList[index].price;
+    cartProductsList.splice(index, 1);
+    localStorage.setItem("cartProductsList", JSON.stringify(cartProductsList));
+    localStorage.setItem("totalPrice", totalPrice);
+    document.querySelector(".cartTotalPrice").innerHTML = totalPrice;
+  }
 }

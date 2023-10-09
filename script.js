@@ -312,35 +312,35 @@ renderProducts();
 function renderProducts() {
   let htmlProducts = "";
   storedProductsList.forEach((product, index) => {
-    let isAddedToCart = cartProductsList.some((item) => item.id === product.id);
-    let addToCartText = product.isAddedToCart ? "Added" : "Add To Cart";
-    let buttonBackgroundColor = product.isAddedToCart
-      ? "green"
-      : "rgb(132, 4, 161)";
-    let htmlProduct = `
-      <div class="container">
-        <img class="ProductImg" src="${product.img}" alt="">
-        <span class="nameOfProduct">${product.title}</span>
-        <p class="descriptionProd">${product.desc}</p>
-       <div class="priceAddToCartDiv">
-       <span>${product.price} $</span>
-       <div class="addToCartDiv"  style="background-color: ${buttonBackgroundColor};cursor: ${
-      !isAddedToCart ? "pointer" : ""
-    };">    <button style="cursor: ${
-      !isAddedToCart ? "pointer" : ""
-    };" class="addToCartBtn" data-index="${index}">
-          ${addToCartText}
-        </button>
-        <i class="fa-solid fa-cart-shopping"></i>
-        </div>
-       </div>
-      </div>`;
-    htmlProducts += htmlProduct;
+    htmlProducts += generateHtmlProducts(product, index);
   });
   document.querySelector(".productsList").innerHTML = htmlProducts;
   document.querySelector(".cartCount").innerHTML = cartItemCount;
 }
-
+function generateHtmlProducts(product, index) {
+  let isAddedToCart = cartProductsList.some((item) => item.id === product.id);
+  let addToCartText = product.isAddedToCart ? "Added" : "Add To Cart";
+  let buttonBackgroundColor = product.isAddedToCart
+    ? "green"
+    : "rgb(132, 4, 161)";
+  return `<div class="container">
+  <img class="ProductImg" src="${product.img}" alt="">
+  <span class="nameOfProduct">${product.title}</span>
+  <p class="descriptionProd">${product.desc}</p>
+ <div class="priceAddToCartDiv">
+ <span>${product.price} $</span>
+ <div class="addToCartDiv"  style="background-color: ${buttonBackgroundColor};cursor: ${
+    !isAddedToCart ? "pointer" : ""
+  };">    <button style="cursor: ${
+    !isAddedToCart ? "pointer" : ""
+  };" class="addToCartBtn" data-index="${index}">
+    ${addToCartText}
+  </button>
+  <i class="fa-solid fa-cart-shopping"></i>
+  </div>
+ </div>
+</div>`;
+}
 document.addEventListener("click", (event) => {
   if (event.target.classList.contains("addToCartBtn")) {
     const index = event.target.getAttribute("data-index");
