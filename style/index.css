@@ -59,24 +59,28 @@ body{
 }
 .cart i {
   margin-right: 4px;
+  color: rgb(132, 4, 161);
 }
 
 .products{
   margin-top: 120px;
+
 }
 
 .productsList{
   display: grid;
-  grid-template-columns:  450px  450px 450px;
-  column-gap: 50px;
-  row-gap: 60px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  row-gap: 20px;
+  column-gap: 10px;
   justify-content: center;
+  margin-left: 50px;
 }
 .container{
   background-color: white;
   border-radius: 2%;
-  width: 450px;
-  height: 600px;
+  width: 380px;
+  height: 480px;
+  padding: 20px 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -120,7 +124,7 @@ body{
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 0px 50px;
+  padding: 0px 20px;
   align-items: center;
 }
 

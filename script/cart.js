@@ -32,9 +32,9 @@ function generateHtmlCartProducts(product, index) {
     </div>
     <p class="cartProdDesc">${product.desc} </p>
     <div class="cartProdSettingsRow">
-      <div class="deleteDiv">
+      <div  onclick="deleteCartProduct(${index})" class="deleteDiv">
         <i class="fa-solid fa-trash"></i>
-        <button onclick="deleteCartProduct(${index})" class="cartDeleteBtn">Delete</button>
+        <button class="cartDeleteBtn">Delete</button>
       </div>
       <div class="cartProdQuantity">
         <i onclick="decrementQuantity(${index});  decrementCartTotalPrice();" class="fa-solid fa-square-minus"></i>

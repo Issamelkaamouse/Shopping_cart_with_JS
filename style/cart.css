@@ -12,12 +12,13 @@
   border-radius: 10px;
   display: flex;
   margin-bottom: 50px;
+  margin-right: 50px;
 }
 .cartProdImg{
   width: 350px;
   height: 300px;
   border-radius: 10px;
-  padding: 0px 10px;
+  padding: 20px 20px;
 }
 .cartProdName{
   font-size: 25px;
@@ -30,12 +31,12 @@
   font-weight: bold;
 }
 .fa-solid{
-  color: rgb(132, 4, 161);
+  color: red;
   font-size: 18px;
   margin-right: 5px;
 }
 .cartDeleteBtn{
-  color: rgb(132, 4, 161);
+  color: red;
   font-size: 20px;
   font-weight: bold;
   border: none;
@@ -80,6 +81,7 @@
 .cartProdQuantity i{
   font-size: 28px;
   cursor: pointer;
+  color: rgb(132, 4, 161);
 }
 
 .deleteDiv{
